@@ -1,16 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './components/App';
+import App from './components/App/App';
 import * as serviceWorker from './serviceWorker';
-import PasswordForget from "./components/PasswordForget/PasswordForget";
 
 ReactDOM.render(
-  <div>
-    <App />
-    <PasswordForget />
-  </div>,
-
+    <App />,
   document.getElementById('root')
 );
 
