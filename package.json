@@ -36,6 +36,7 @@
     ]
   },
   "devDependencies": {
+    "eslint-plugin-jsx-a11y": "^6.1.1",
     "postcss-normalize": "^7.0.1"
   }
 }

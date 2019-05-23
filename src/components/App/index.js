@@ -13,7 +13,7 @@ import Home from "../Home";
 import Account from "../Account";
 import Admin from "../Admin";
 
-import * as ROUTES from "../constants/routes"
+import * as ROUTES from "../../constants/routes"
 
 
 

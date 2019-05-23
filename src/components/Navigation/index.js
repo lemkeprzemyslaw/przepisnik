@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from "react-router-dom";
 
-import * as ROUTES from '../constants/routes'
+import * as ROUTES from '../../constants/routes'
 
 import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
