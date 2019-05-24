@@ -16,6 +16,12 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
 
+const SignUp = (props) => (
+  <div>
+    <SignUpForm classes={props.classes}/>
+  </div>
+);
+
 const styles = theme => ({
   main: {
     width: 'auto',
@@ -48,13 +54,6 @@ const styles = theme => ({
   },
 });
 
-const SignUp = () => (
-  <div>
-    <h1>Zarejestruj się</h1>
-    <SignUpForm />
-  </div>
-);
-
 const INITIAL_STATE = {
   username: '',
   email: '',
@@ -62,8 +61,6 @@ const INITIAL_STATE = {
   passwordTwo: '',
   error: null
 };
-
-// const { classes } = props; TODO
 
 class SignUpForm extends React.Component {
   constructor(props) {
