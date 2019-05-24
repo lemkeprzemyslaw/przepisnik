@@ -15,6 +15,7 @@ import LockOutlinedIcon from '@material-ui/icons/PersonAddOutlined';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
+import CustomizedSnackbars from "../Snackbars";
 
 const SignUp = (props) => (
   <div>
@@ -74,10 +75,18 @@ class SignUpForm extends React.Component {
   };
 
   onChange = event => {
-
+    this.setState({ [event.target.name]: event.target.value })
   };
 
   render() {
+    const {
+      username,
+      email,
+      passwordOne,
+      passwordTwo,
+      error
+    } = this.state;
+
     return (
       <main className={this.props.classes.main} onSubmit={this.onSubmit}>
         <CssBaseline />
@@ -90,16 +99,49 @@ class SignUpForm extends React.Component {
           </Typography>
           <form className={this.props.classes.form}>
             <FormControl margin="normal" required fullWidth>
+              <InputLabel htmlFor="username">Nazwa użytkownika</InputLabel>
+              <Input
+                id="email"
+                name="username"
+                value={username}
+                onChange={this.onChange}
+                type="text"
+                autoComplete="name"
+                autoFocus
+              />
+            </FormControl>
+            <FormControl margin="normal" required fullWidth>
               <InputLabel htmlFor="email">Adres email</InputLabel>
-              <Input id="email" name="email" autoComplete="email" autoFocus />
+              <Input
+                id="email"
+                name="email"
+                value={email}
+                onChange={this.onChange}
+                type="text"
+                autoComplete="email"
+              />
             </FormControl>
             <FormControl margin="normal" required fullWidth>
               <InputLabel htmlFor="password">Hasło</InputLabel>
-              <Input name="password" type="password" id="password" autoComplete="current-password" />
+              <Input
+                id="passwordOne"
+                name="passwordOne"
+                value={passwordOne}
+                onChange={this.onChange}
+                type="password"
+                autoComplete="current-password"
+              />
             </FormControl>
             <FormControl margin="normal" required fullWidth>
               <InputLabel htmlFor="password">Powtórz hasło</InputLabel>
-              <Input name="password" type="password" id="password" autoComplete="current-password" />
+              <Input
+                id="passwordTwo"
+                name="passwordTwo"
+                value={passwordTwo}
+                onChange={this.onChange}
+                type="password"
+                autoComplete="current-password"
+              />
             </FormControl>
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
@@ -116,6 +158,12 @@ class SignUpForm extends React.Component {
             </Button>
           </form>
         </Paper>
+
+        {error && <p>{error.message}</p>}
+        <CustomizedSnackbars
+          variant="error"
+          message={error}
+        />
       </main>
     );
   }
