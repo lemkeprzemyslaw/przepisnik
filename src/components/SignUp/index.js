@@ -1,5 +1,8 @@
 import React from 'react';
+import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types';
+import * as ROUTES from '../../constants/routes';
+
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -45,53 +48,92 @@ const styles = theme => ({
   },
 });
 
-function SignUp(props) {
-  const { classes } = props;
+const SignUp = () => (
+  <div>
+    <h1>Zarejestruj się</h1>
+    <SignUpForm />
+  </div>
+);
 
-  return (
-    <main className={classes.main}>
-      <CssBaseline />
-      <Paper className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Załóż nowe konto
-        </Typography>
-        <form className={classes.form}>
-          <FormControl margin="normal" required fullWidth>
-            <InputLabel htmlFor="email">Adres email</InputLabel>
-            <Input id="email" name="email" autoComplete="email" autoFocus />
-          </FormControl>
-          <FormControl margin="normal" required fullWidth>
-            <InputLabel htmlFor="password">Hasło</InputLabel>
-            <Input name="password" type="password" id="password" autoComplete="current-password" />
-          </FormControl>
-          <FormControl margin="normal" required fullWidth>
-            <InputLabel htmlFor="password">Powtórz hasło</InputLabel>
-            <Input name="password" type="password" id="password" autoComplete="current-password" />
-          </FormControl>
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Zapamiętaj mnie"
-          />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
-            Zarejestruj się
-          </Button>
-        </form>
-      </Paper>
-    </main>
-  );
+const INITIAL_STATE = {
+  username: '',
+  email: '',
+  passwordOne: '',
+  passwordTwo: '',
+  error: null
+};
+
+// const { classes } = props; TODO
+
+class SignUpForm extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = { ...INITIAL_STATE };
+  }
+
+  onSubmit = event => {
+
+  };
+
+  onChange = event => {
+
+  };
+
+  render() {
+    return (
+      <main className={this.props.classes.main} onSubmit={this.onSubmit}>
+        <CssBaseline />
+        <Paper className={this.props.classes.paper}>
+          <Avatar className={this.props.classes.avatar}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Załóż nowe konto
+          </Typography>
+          <form className={this.props.classes.form}>
+            <FormControl margin="normal" required fullWidth>
+              <InputLabel htmlFor="email">Adres email</InputLabel>
+              <Input id="email" name="email" autoComplete="email" autoFocus />
+            </FormControl>
+            <FormControl margin="normal" required fullWidth>
+              <InputLabel htmlFor="password">Hasło</InputLabel>
+              <Input name="password" type="password" id="password" autoComplete="current-password" />
+            </FormControl>
+            <FormControl margin="normal" required fullWidth>
+              <InputLabel htmlFor="password">Powtórz hasło</InputLabel>
+              <Input name="password" type="password" id="password" autoComplete="current-password" />
+            </FormControl>
+            <FormControlLabel
+              control={<Checkbox value="remember" color="primary" />}
+              label="Zapamiętaj mnie"
+            />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={this.props.classes.submit}
+            >
+              Zarejestruj się
+            </Button>
+          </form>
+        </Paper>
+      </main>
+    );
+  }
 }
+
+const SignUpLink = () => (
+  <p>
+    Nie masz jeszcze konta? <Link to={ROUTES.SIGN_UP}>Zarejestruj się!</Link>
+  </p>
+);
 
 SignUp.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
 export default withStyles(styles)(SignUp);
+
+export { SignUpForm, SignUpLink }
