@@ -1,14 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types';
+
+import { FirebaseContext } from '../Firebase'
 import * as ROUTES from '../../constants/routes';
 
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import FormControl from '@material-ui/core/FormControl';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import LockOutlinedIcon from '@material-ui/icons/PersonAddOutlined';
@@ -19,7 +19,9 @@ import CustomizedSnackbars from "../Snackbars";
 
 const SignUp = (props) => (
   <div>
-    <SignUpForm classes={props.classes}/>
+    <FirebaseContext.Consumer>
+      {firebase => <SignUpForm classes={props.classes} />}
+    </FirebaseContext.Consumer>
   </div>
 );
 
@@ -27,20 +29,20 @@ const styles = theme => ({
   main: {
     width: 'auto',
     display: 'block', // Fix IE 11 issue.
-    marginLeft: theme.spacing.unit * 3,
-    marginRight: theme.spacing.unit * 3,
-    [theme.breakpoints.up(400 + theme.spacing.unit * 3 * 2)]: {
+    marginLeft: theme.spacing(3),
+    marginRight: theme.spacing(3),
+    [theme.breakpoints.up(400 + theme.spacing(6))]: {
       width: 400,
       marginLeft: 'auto',
       marginRight: 'auto',
     },
   },
   paper: {
-    marginTop: theme.spacing.unit * 8,
+    marginTop: theme.spacing(8),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme.spacing.unit * 3}px`,
+    padding: `${theme.spacing(2)}px ${theme.spacing(3)}px ${theme.spacing(3)}px`,
   },
   avatar: {
     margin: theme.spacing.unit,
@@ -51,7 +53,7 @@ const styles = theme => ({
     marginTop: theme.spacing.unit,
   },
   submit: {
-    marginTop: theme.spacing.unit * 3,
+    marginTop: theme.spacing(3),
   },
 });
 
@@ -71,7 +73,17 @@ class SignUpForm extends React.Component {
   }
 
   onSubmit = event => {
+    const { username, email, passwordOne } = this.state;
 
+    this.props.firebase
+      .doSignUp(email, passwordOne)
+      .then(authUser => {
+        this.setState({ ...INITIAL_STATE });
+      })
+      .catch(error => {
+        this.setState({ error })
+      });
+    event.preventDefault();
   };
 
   onChange = event => {
@@ -87,8 +99,14 @@ class SignUpForm extends React.Component {
       error
     } = this.state;
 
+    const isValid =
+      passwordOne !== passwordTwo ||
+      passwordOne.trim() === '' ||
+      email.trim() === '' ||
+      username.trim() === '';
+
     return (
-      <main className={this.props.classes.main} onSubmit={this.onSubmit}>
+      <main className={this.props.classes.main}>
         <CssBaseline />
         <Paper className={this.props.classes.paper}>
           <Avatar className={this.props.classes.avatar}>
@@ -97,7 +115,7 @@ class SignUpForm extends React.Component {
           <Typography component="h1" variant="h5">
             Załóż nowe konto
           </Typography>
-          <form className={this.props.classes.form}>
+          <form className={this.props.classes.form} onSubmit={this.onSubmit}>
             <FormControl margin="normal" required fullWidth>
               <InputLabel htmlFor="username">Nazwa użytkownika</InputLabel>
               <Input
@@ -143,11 +161,8 @@ class SignUpForm extends React.Component {
                 autoComplete="current-password"
               />
             </FormControl>
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Zapamiętaj mnie"
-            />
             <Button
+              disabled={isValid}
               type="submit"
               fullWidth
               variant="contained"
@@ -158,11 +173,10 @@ class SignUpForm extends React.Component {
             </Button>
           </form>
         </Paper>
-
         {error && <p>{error.message}</p>}
         <CustomizedSnackbars
           variant="error"
-          message={error}
+          message={error && error.message}
         />
       </main>
     );

@@ -20,7 +20,7 @@ const variantIcon = {
   info: InfoIcon,
 };
 
-const useStyles1 = makeStyles(theme => ({
+const useStyle = makeStyles(theme => ({
   success: {
     backgroundColor: green[600],
   },
@@ -47,7 +47,7 @@ const useStyles1 = makeStyles(theme => ({
 }));
 
 function MySnackbarContentWrapper(props) {
-  const classes = useStyles1();
+  const classes = useStyle();
   const { className, message, onClose, variant, ...other } = props;
   const Icon = variantIcon[variant];
 
@@ -78,7 +78,7 @@ MySnackbarContentWrapper.propTypes = {
   variant: PropTypes.oneOf(['success', 'warning', 'error', 'info']).isRequired,
 };
 
-function CustomizedSnackbar() {
+function CustomizedSnackbar({ variant, message }) {
   const [open, setOpen] = React.useState(false);
 
   function handleClose(event, reason) {
@@ -102,8 +102,8 @@ function CustomizedSnackbar() {
       >
         <MySnackbarContentWrapper
           onClose={handleClose}
-          // variant="success"
-          // message="This is a success message!"
+          variant={variant}
+          message={message}
         />
       </Snackbar>
     </div>
