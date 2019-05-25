@@ -15,12 +15,11 @@ import LockOutlinedIcon from '@material-ui/icons/PersonAddOutlined';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
-import CustomizedSnackbars from "../Snackbars";
 
 const SignUp = (props) => (
   <div>
     <FirebaseContext.Consumer>
-      {firebase => <SignUpForm classes={props.classes} />}
+      {firebase => <SignUpForm firebase={firebase} classes={props.classes} />}
     </FirebaseContext.Consumer>
   </div>
 );
@@ -173,11 +172,7 @@ class SignUpForm extends React.Component {
             </Button>
           </form>
         </Paper>
-        {error && <p>{error.message}</p>}
-        <CustomizedSnackbars
-          variant="error"
-          message={error && error.message}
-        />
+        {error && error.message}
       </main>
     );
   }
