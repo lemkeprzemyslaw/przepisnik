@@ -78,7 +78,7 @@ MySnackbarContentWrapper.propTypes = {
   variant: PropTypes.oneOf(['success', 'warning', 'error', 'info']).isRequired,
 };
 
-function CustomizedSnackbars() {
+function CustomizedSnackbar() {
   const [open, setOpen] = React.useState(false);
 
   function handleClose(event, reason) {
@@ -110,4 +110,4 @@ function CustomizedSnackbars() {
   );
 }
 
-export default CustomizedSnackbars;
+export default CustomizedSnackbar;
