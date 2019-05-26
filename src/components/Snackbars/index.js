@@ -78,36 +78,57 @@ MySnackbarContentWrapper.propTypes = {
   variant: PropTypes.oneOf(['success', 'warning', 'error', 'info']).isRequired,
 };
 
-function CustomizedSnackbar({ variant, message }) {
-  const [open, setOpen] = React.useState(false);
+class CustomizedSnackbar extends React.Component {
+  constructor(props) {
+    super(props);
 
-  function handleClose(event, reason) {
+    this.state = { open: false }
+
+    this.handleClose = this.handleClose.bind(this) //hmmm...
+    this.handleClick = this.handleClick.bind(this) //hmmm...
+  }
+
+  handleClick() {
+    this.setState({ open: true });
+  }
+
+  handleClose(event, reason) {
     if (reason === 'clickaway') {
       return;
     }
 
-    setOpen(false);
+    console.log(this.state.open);
+
+    this.setState({ open: false });
   }
 
-  return (
-    <div>
-      <Snackbar
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'left',
-        }}
-        open={open}
-        autoHideDuration={6000}
-        onClose={handleClose}
-      >
-        <MySnackbarContentWrapper
-          onClose={handleClose}
-          variant={variant}
-          message={message}
-        />
-      </Snackbar>
-    </div>
-  );
+  componentDidMount(){
+    this.handleClick()
+  };
+
+  render() {
+    const { variant, message } = this.props;
+
+    return (
+      <div>
+        <Snackbar
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'left',
+          }}
+          open={this.state.open}
+          autoHideDuration={6000}
+          onClose={this.handleClose}
+        >
+          <MySnackbarContentWrapper
+            onClose={this.handleClose}
+            variant={variant}
+            message={message}
+          />
+        </Snackbar>
+      </div>
+    );
+  }
 }
 
 export default CustomizedSnackbar;

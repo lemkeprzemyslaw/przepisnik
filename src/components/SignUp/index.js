@@ -15,6 +15,7 @@ import LockOutlinedIcon from '@material-ui/icons/PersonAddOutlined';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
+import CustomizedSnackbar from "../Snackbars";
 
 const SignUp = (props) => (
   <div>
@@ -160,6 +161,11 @@ class SignUpForm extends React.Component {
                 autoComplete="current-password"
               />
             </FormControl>
+            {error && error.message}
+            {error && <CustomizedSnackbar
+              variant='error'
+              message={error.message}
+            />}
             <Button
               disabled={isValid}
               type="submit"
@@ -172,7 +178,6 @@ class SignUpForm extends React.Component {
             </Button>
           </form>
         </Paper>
-        {error && error.message}
       </main>
     );
   }
