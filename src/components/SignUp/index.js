@@ -82,7 +82,12 @@ class SignUpForm extends React.Component {
       })
       .catch(error => {
         this.setState({ error })
+        setTimeout(() => {
+          this.setState({ error: null })
+        }, 6000)
       });
+
+
     event.preventDefault();
   };
 
@@ -161,11 +166,6 @@ class SignUpForm extends React.Component {
                 autoComplete="current-password"
               />
             </FormControl>
-            {error && error.message}
-            {error && <CustomizedSnackbar
-              variant='error'
-              message={error.message}
-            />}
             <Button
               disabled={isValid}
               type="submit"
@@ -178,6 +178,10 @@ class SignUpForm extends React.Component {
             </Button>
           </form>
         </Paper>
+        {error && <CustomizedSnackbar
+          variant='error'
+          message={error.message}
+        />}
       </main>
     );
   }

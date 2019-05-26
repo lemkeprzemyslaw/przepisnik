@@ -83,16 +83,13 @@ class CustomizedSnackbar extends React.Component {
     super(props);
 
     this.state = { open: false }
-
-    this.handleClose = this.handleClose.bind(this) //hmmm...
-    this.handleClick = this.handleClick.bind(this) //hmmm...
   }
 
-  handleClick() {
+  handleClick = () => {
     this.setState({ open: true });
-  }
+  };
 
-  handleClose(event, reason) {
+  handleClose = (event, reason) => {
     if (reason === 'clickaway') {
       return;
     }
@@ -100,7 +97,7 @@ class CustomizedSnackbar extends React.Component {
     console.log(this.state.open);
 
     this.setState({ open: false });
-  }
+  };
 
   componentDidMount(){
     this.handleClick()
