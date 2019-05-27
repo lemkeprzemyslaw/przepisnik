@@ -123,7 +123,7 @@ class SignUpFormBase extends React.Component {
             <FormControl margin="normal" required fullWidth>
               <InputLabel htmlFor="username">Nazwa użytkownika</InputLabel>
               <Input
-                id="email"
+                id="username"
                 name="username"
                 value={username}
                 onChange={this.onChange}

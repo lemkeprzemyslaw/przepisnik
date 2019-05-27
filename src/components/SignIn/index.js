@@ -1,5 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { withRouter } from "react-router";
+
+import { SignUpLink } from "../SignUp";
+import { withFirebase } from "../Firebase";
+import * as ROUTES from '../../constants/routes'
+
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,6 +18,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
+import CustomizedSnackbar from "../Snackbars";
 
 const styles = theme => ({
   main: {
@@ -45,49 +52,118 @@ const styles = theme => ({
   },
 });
 
-function SignIn(props) {
-  const { classes } = props;
+const SignIn = (props) => (
+  <div>
+    <SignInForm classes={props.classes} />
+    <SignUpLink />
+  </div>
+);
 
-  return (
-    <main className={classes.main}>
-      <CssBaseline />
-      <Paper className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Zaloguj się
-        </Typography>
-        <form className={classes.form}>
-          <FormControl margin="normal" required fullWidth>
-            <InputLabel htmlFor="email">Adres email</InputLabel>
-            <Input id="email" name="email" autoComplete="email" autoFocus />
-          </FormControl>
-          <FormControl margin="normal" required fullWidth>
-            <InputLabel htmlFor="password">Hasło</InputLabel>
-            <Input name="password" type="password" id="password" autoComplete="current-password" />
-          </FormControl>
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
+const INITIAL_STATE = {
+  email: '',
+  password: '',
+  error: null
+};
+
+class SignInFormBase extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = { ...INITIAL_STATE };
+  }
+
+  onSubmit = event => {
+    const { email, password } = this.state;
+
+    this.props.firebase
+      .doSignIn(email, password)
+      .then(() => {
+        this.setState({ ...INITIAL_STATE });
+        this.props.history.push(ROUTES.HOME);
+      })
+      .catch(error => {
+        this.setState({ error });
+        setTimeout(() => {
+          this.setState({ error: null })
+        }, 6000)
+      });
+    event.preventDefault();
+  };
+
+  onChange = event => {
+    this.setState({ [event.target.name]: event.target.value })
+  };
+
+  render() {
+    const { email, password, error } = this.state;
+
+    const isValid =
+      password.trim() === '' ||
+      email.trim() === '';
+
+    return (
+      <main className={this.props.classes.main}>
+        <CssBaseline />
+        <Paper className={this.props.classes.paper}>
+          <Avatar className={this.props.classes.avatar}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
             Zaloguj się
-          </Button>
-        </form>
-      </Paper>
-    </main>
-  );
+          </Typography>
+          <form className={this.props.classes.form} onSubmit={this.onSubmit}>
+            <FormControl margin="normal" required fullWidth>
+              <InputLabel htmlFor="email">Adres email</InputLabel>
+              <Input
+                id="email"
+                name="email"
+                value={email}
+                onChange={this.onChange}
+                type="text"
+                autoComplete="email"
+                autoFocus />
+            </FormControl>
+            <FormControl margin="normal" required fullWidth>
+              <InputLabel htmlFor="password">Hasło</InputLabel>
+              <Input
+                id="password"
+                name="password"
+                value={password}
+                onChange={this.onChange}
+                type="password"
+                autoComplete="current-password" />
+            </FormControl>
+            <FormControlLabel
+              control={<Checkbox value="remember" color="primary" />}
+              label="Remember me"
+            />
+            <Button
+              disabled={isValid}
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={this.props.classes.submit}
+            >
+              Zaloguj się
+            </Button>
+          </form>
+        </Paper>
+        {error && <CustomizedSnackbar
+          variant='error'
+          message={error.message}
+        />}
+      </main>
+    );
+  }
 }
 
 SignIn.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
+const SignInForm = withRouter(withFirebase(SignInFormBase));
+
 export default withStyles(styles)(SignIn);
+
+export { SignInForm }
