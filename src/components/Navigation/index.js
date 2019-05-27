@@ -31,6 +31,7 @@ function Navigation(props) {
           <Typography variant="h6" color="inherit" noWrap className={classes.toolbarTitle}>
             Company name
           </Typography>
+          <Button><Link to={ROUTES.SIGN_UP}>Zarejestruj się</Link></Button>
           <Button><Link to={ROUTES.SIGN_IN}>Zaloguj się</Link></Button>
           <Button><Link to={ROUTES.LANDING}>Landing</Link></Button>
           <Button><Link to={ROUTES.HOME}>Strona główna</Link></Button>

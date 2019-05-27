@@ -6,12 +6,10 @@ import * as serviceWorker from './serviceWorker';
 
 import App from './components/App';
 import Firebase, { FirebaseContext } from "./components/Firebase"
-import SignUp from "./components/SignUp";
 
 ReactDOM.render(
   <FirebaseContext.Provider value={new Firebase()}>
     <App />
-    <SignUp />
   </FirebaseContext.Provider>,
   document.getElementById('root')
 );

@@ -1,8 +1,8 @@
 import React from 'react';
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 import PropTypes from 'prop-types';
 
-import { FirebaseContext } from '../Firebase'
+import { withFirebase } from '../Firebase'
 import * as ROUTES from '../../constants/routes';
 
 import Avatar from '@material-ui/core/Avatar';
@@ -19,9 +19,7 @@ import CustomizedSnackbar from "../Snackbars";
 
 const SignUp = (props) => (
   <div>
-    <FirebaseContext.Consumer>
-      {firebase => <SignUpForm firebase={firebase} classes={props.classes} />}
-    </FirebaseContext.Consumer>
+    <SignUpForm classes={props.classes} />
   </div>
 );
 
@@ -65,7 +63,7 @@ const INITIAL_STATE = {
   error: null
 };
 
-class SignUpForm extends React.Component {
+class SignUpFormBase extends React.Component {
   constructor(props) {
     super(props);
 
@@ -79,9 +77,10 @@ class SignUpForm extends React.Component {
       .doSignUp(email, passwordOne)
       .then(authUser => {
         this.setState({ ...INITIAL_STATE });
+        this.props.history.push(ROUTES.HOME);
       })
       .catch(error => {
-        this.setState({ error })
+        this.setState({ error });
         setTimeout(() => {
           this.setState({ error: null })
         }, 6000)
@@ -196,6 +195,8 @@ const SignUpLink = () => (
 SignUp.propTypes = {
   classes: PropTypes.object.isRequired,
 };
+
+const SignUpForm = withRouter(withFirebase(SignUpFormBase));
 
 export default withStyles(styles)(SignUp);
 
