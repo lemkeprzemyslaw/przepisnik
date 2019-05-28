@@ -1,9 +1,26 @@
 import React from 'react';
 
-const SignOut = () => (
-  <div>
-    <h1>SignOut</h1>
-  </div>
-);
+import { withFirebase } from "../Firebase";
+import Icofont from 'react-icofont';
+import { makeStyles } from '@material-ui/core/styles';
+import Fab from '@material-ui/core/Fab';
 
-export default SignOut;
+const useStyles = makeStyles(theme => ({
+  fab: {
+    margin: theme.spacing(1),
+  },
+  icon: {
+    marginLeft: '3px',
+  }
+}));
+
+const SignOutButton = ({ firebase }) => {
+  const classes = useStyles();
+  return (
+    <Fab color="primary" aria-label="Add" className={classes.fab} onClick={firebase.doSignOut}>
+      <Icofont icon="sign-out" size="2" className={classes.icon}/>
+    </Fab>
+  );
+};
+
+export default withFirebase(SignOutButton);
