@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom'
+import { compose } from 'recompose';
 import PropTypes from 'prop-types';
 
 import { withFirebase } from '../Firebase'
@@ -43,12 +44,12 @@ const styles = theme => ({
     padding: `${theme.spacing(2)}px ${theme.spacing(3)}px ${theme.spacing(3)}px`,
   },
   avatar: {
-    margin: theme.spacing.unit,
+    margin: theme.spacing(1),
     backgroundColor: theme.palette.primary.main,
   },
   form: {
     width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing.unit,
+    marginTop: theme.spacing(1),
   },
   submit: {
     marginTop: theme.spacing(3),
@@ -196,7 +197,10 @@ SignUp.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-const SignUpForm = withRouter(withFirebase(SignUpFormBase));
+const SignUpForm = compose(
+  withRouter,
+  withFirebase
+)(SignUpFormBase);
 
 export default withStyles(styles)(SignUp);
 
