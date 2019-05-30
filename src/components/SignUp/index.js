@@ -188,9 +188,9 @@ class SignUpFormBase extends React.Component {
 }
 
 const SignUpLink = () => (
-  <p>
+  <Typography align='center'>
     Nie masz jeszcze konta? <Link to={ROUTES.SIGN_UP}>Zarejestruj się!</Link>
-  </p>
+  </Typography>
 );
 
 SignUp.propTypes = {
