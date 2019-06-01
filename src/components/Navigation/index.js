@@ -17,14 +17,14 @@ import Menu from '@material-ui/core/Menu';
 
 const useStyles = makeStyles(theme => ({
   body: {
-    backgroundColor: theme.palette.common.black,
+    backgroundColor: theme.palette.secondary,
   },
   menu: {
-    color: '#2196f3',
+    backgroundColor: theme.palette.primary,
   },
   link: {
     textDecoration: 'none',
-    color: theme.palette.common.white,
+    color: theme.palette.common.black,
   },
   root: {
     flexGrow: 1,
@@ -58,7 +58,7 @@ const NavigationAuth = () => {
   }
 
   return (
-    <AppBar position="static" color="primary" className={classes.appBar}>
+    <AppBar position="static" color="secondary" className={classes.appBar}>
       <Toolbar>
         <Typography variant="h6" color="inherit" noWrap className={classes.toolbarTitle}>
           Moje przepisy

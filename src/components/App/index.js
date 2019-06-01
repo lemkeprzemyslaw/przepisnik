@@ -14,22 +14,26 @@ import Account from '../Account';
 import Admin from '../Admin';
 
 import * as ROUTES from '../../constants/routes';
-import { withAuthentication } from '../Session'
+import {withAuthentication} from '../Session'
 
+import { ThemeProvider } from '@material-ui/styles';
+import theme from '../../ui/theme';
 
 const App = () => (
   <Router>
-    <div>
-      <Navigation/>
+    <ThemeProvider theme={theme}>
+      <div>
+        <Navigation/>
 
-      <Route exact path={ROUTES.LANDING} component={Landing}/>
-      <Route path={ROUTES.SIGN_UP} component={SignUp}/>
-      <Route path={ROUTES.SIGN_IN} component={SignIn}/>
-      <Route path={ROUTES.PASSWORD_FORGET} component={PasswordForget}/>
-      <Route path={ROUTES.HOME} component={Home}/>
-      <Route path={ROUTES.ACCOUNT} component={Account}/>
-      <Route path={ROUTES.ADMIN} component={Admin}/>
-    </div>
+        <Route exact path={ROUTES.LANDING} component={Landing}/>
+        <Route path={ROUTES.SIGN_UP} component={SignUp}/>
+        <Route path={ROUTES.SIGN_IN} component={SignIn}/>
+        <Route path={ROUTES.PASSWORD_FORGET} component={PasswordForget}/>
+        <Route path={ROUTES.HOME} component={Home}/>
+        <Route path={ROUTES.ACCOUNT} component={Account}/>
+        <Route path={ROUTES.ADMIN} component={Admin}/>
+      </div>
+    </ThemeProvider>
   </Router>
 );
 
