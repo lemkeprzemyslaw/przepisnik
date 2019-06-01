@@ -58,6 +58,7 @@ const PasswordForget = () => (
 const INITIAL_STATE = {
   email: '',
   error: null,
+  message: false,
 };
 
 class PasswordForgetFormBase extends React.Component {
@@ -68,12 +69,12 @@ class PasswordForgetFormBase extends React.Component {
   };
 
   onSubmit = event => {
-    const { email, error } = this.state;
+    const { email, error, message } = this.state;
 
     this.props.firebase
       .doPasswordReset(email)
       .then(() => {
-        this.setState({ INITIAL_STATE });
+        this.setState({ ...INITIAL_STATE, message: true })
       })
       .catch(() => {
         this.setState({ error })
@@ -87,7 +88,7 @@ class PasswordForgetFormBase extends React.Component {
   };
 
   render() {
-    const { email, error } = this.state;
+    const { email, error, message } = this.state;
     const isInvalid = email.trim() === '';
     const { classes } = this.props;
 
@@ -125,6 +126,10 @@ class PasswordForgetFormBase extends React.Component {
             </Button>
           </form>
         </Paper>
+        {message && <CustomizedSnackbar
+          variant='success'
+          message='Na wskazany adres email, został wysłany link do zmiany hasła'
+        />}
         {error && <CustomizedSnackbar
           variant='error'
           message={error.message}
@@ -144,8 +149,8 @@ PasswordForget.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(PasswordForget);
+export default PasswordForget;
 
-const PasswordForgetForm = withFirebase(PasswordForgetFormBase);
+const PasswordForgetForm = withFirebase(withStyles(styles)(PasswordForgetFormBase));
 
 export { PasswordForgetForm, PasswordForgetLink }

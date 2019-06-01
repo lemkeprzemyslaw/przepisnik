@@ -102,7 +102,7 @@ const NavigationAuth = () => {
 const NavigationNonAuth = () => {
   const classes = useStyles();
   return (
-    <AppBar position="static" color="primary" className={classes.appBar}>
+    <AppBar position="static" color="secondary" className={classes.appBar}>
       <Toolbar>
         <Typography variant="h6" color="inherit" noWrap className={classes.toolbarTitle}>
           Company name
