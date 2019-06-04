@@ -17,7 +17,7 @@ class Firebase {
     app.initializeApp(config);
 
     this.auth = app.auth();
-    this.db = app.database();
+    this.db = app.firestore();
   }
 
   doSignUp = (email, password) =>
@@ -33,9 +33,9 @@ class Firebase {
   doPasswordUpdate = password =>
     this.auth.currentUser.updatePassword(password);
 
-  user = uid => this.db.ref('users/' + uid);
+  user = uid => this.db.collection('users').doc(uid);
 
-  users = () => this.db.ref('users');
+  users = () => this.db.collection('users');
 }
 
 export default Firebase;
