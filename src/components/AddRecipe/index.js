@@ -4,6 +4,8 @@ import InputLabel from '@material-ui/core/InputLabel';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import Button from '@material-ui/core/Button'
 import Input from '@material-ui/core/Input';
+import {FormControlLabel} from '@material-ui/core';
+import Switch from '@material-ui/core/Switch';
 
 class AddRecipeForm extends React.Component {
   constructor(props) {
@@ -22,6 +24,12 @@ class AddRecipeForm extends React.Component {
   handleChange = (e) => {
     this.setState({
       [e.target.id]: e.target.value
+    })
+  };
+
+  handleSwitchChange = (e) => {
+    this.setState({
+      [e.target.value]: e.target.checked
     })
   };
 
@@ -74,7 +82,7 @@ class AddRecipeForm extends React.Component {
             />
           </FormControl>
           <FormControl variant="outlined" margin="dense">
-            <InputLabel htmlFor="prepareTime">Opis</InputLabel>
+            <InputLabel htmlFor="prepareTime">Czas przygotowania</InputLabel>
             <OutlinedInput
               id="prepareTime"
               name="prepareTime"
@@ -83,7 +91,7 @@ class AddRecipeForm extends React.Component {
             />
           </FormControl>
           <FormControl variant="outlined" margin="dense">
-            <InputLabel htmlFor="difficult">Opis</InputLabel>
+            <InputLabel htmlFor="difficult">Poziom trudności</InputLabel>
             <OutlinedInput
               id="difficult"
               name="difficult"
@@ -93,7 +101,7 @@ class AddRecipeForm extends React.Component {
             />
           </FormControl>
           <FormControl variant="outlined" margin="dense">
-            <InputLabel htmlFor="tags">Składniki</InputLabel>
+            <InputLabel htmlFor="tags">Tagi</InputLabel>
             <OutlinedInput
               id="tags"
               name="tags"
@@ -102,16 +110,17 @@ class AddRecipeForm extends React.Component {
               type="text"
             />
           </FormControl>
-          <FormControl variant="outlined" margin="dense">
-            <InputLabel htmlFor="pub">Składniki</InputLabel>
-            <OutlinedInput
-              id="pub"
-              name="pub"
-              value={pub}
-              onChange={this.handleChange}
-              type="text"
-            />
-          </FormControl>
+          <FormControlLabel
+            control={
+              <Switch
+                checked={pub}
+                onChange={this.handleSwitchChange}
+                value="pub"
+                color="primary"
+              />
+            }
+            label={pub ? "Publiczny" : "Niepubliczny"}
+          />
           <Button onSubmit={this.handleSubmit}>Zapisz</Button>
         </form>
       </div>
