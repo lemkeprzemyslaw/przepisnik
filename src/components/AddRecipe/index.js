@@ -2,18 +2,20 @@ import React from 'react';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
+import Button from '@material-ui/core/Button'
+import Input from '@material-ui/core/Input';
 
-class AppRecipeForm extends React.Component {
+class AddRecipeForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       name: '',
       ingredients: '',
       description: '',
-      time: '',
+      prepareTime: '',
       difficult: '',
       tags: '',
-      public: false
+      pub: false
     }
   }
 
@@ -28,41 +30,93 @@ class AppRecipeForm extends React.Component {
   };
 
   render() {
+    const {
+      name,
+      ingredients,
+      description,
+      prepareTime,
+      difficult,
+      tags,
+      pub } = this.state;
+
     return (
       <div>
         <form>
-          <FormControl variant="outlined">
-            <InputLabel htmlFor="component-outlined">Nazwa dania</InputLabel>
+          <FormControl variant="outlined" margin="dense" color="primary">
+            <InputLabel htmlFor="name">Nazwa dania</InputLabel>
             <OutlinedInput
               id="name"
+              name="name"
+              value={name}
               onChange={this.handleChange}
-              labelWidth={this.labelRef ? this.labelRef.offsetWidth : 0}
+              type="text"
+              autoFocus
             />
           </FormControl>
-
-          <label htmlFor="name">Nazwa dania</label>
-          <input type="text" id="name" onChange={this.handleChange}/>
-
-          <label htmlFor="name">Składniki</label>
-          <input type="text" id="ingredients" onChange={this.handleChange}/>
-
-          <label htmlFor="name">Opis</label>
-          <textarea type="text" id="description" onChange={this.handleChange}/>
-
-          <label htmlFor="name">Czas wykonania</label>
-          <select type="text" id="time" onChange={this.handleChange}/>
-
-          <label htmlFor="name">Poziom trudności</label>
-          <select type="text" id="difficult" onChange={this.handleChange}/>
-
-          <label htmlFor="name">Kategorie</label>
-          <input type="text" id="tags" onChange={this.handleChange}/>
-
-          <button onSubmit={this.handleSubmit}>Zapisz</button>
+          <FormControl variant="outlined" margin="dense">
+            <InputLabel htmlFor="ingredients">Składniki</InputLabel>
+            <OutlinedInput
+              id="ingredients"
+              name="ingredients"
+              value={ingredients}
+              onChange={this.handleChange}
+              type="text"
+            />
+          </FormControl>
+          <FormControl variant="outlined" margin="dense">
+            <InputLabel htmlFor="description">Opis</InputLabel>
+            <OutlinedInput
+              id="description"
+              name="description"
+              value={description}
+              onChange={this.handleChange}
+              type="text"
+            />
+          </FormControl>
+          <FormControl variant="outlined" margin="dense">
+            <InputLabel htmlFor="prepareTime">Opis</InputLabel>
+            <OutlinedInput
+              id="prepareTime"
+              name="prepareTime"
+              value={prepareTime}
+              onChange={this.handleChange}
+            />
+          </FormControl>
+          <FormControl variant="outlined" margin="dense">
+            <InputLabel htmlFor="difficult">Opis</InputLabel>
+            <OutlinedInput
+              id="difficult"
+              name="difficult"
+              value={difficult}
+              onChange={this.handleChange}
+              type="text"
+            />
+          </FormControl>
+          <FormControl variant="outlined" margin="dense">
+            <InputLabel htmlFor="tags">Składniki</InputLabel>
+            <OutlinedInput
+              id="tags"
+              name="tags"
+              value={tags}
+              onChange={this.handleChange}
+              type="text"
+            />
+          </FormControl>
+          <FormControl variant="outlined" margin="dense">
+            <InputLabel htmlFor="pub">Składniki</InputLabel>
+            <OutlinedInput
+              id="pub"
+              name="pub"
+              value={pub}
+              onChange={this.handleChange}
+              type="text"
+            />
+          </FormControl>
+          <Button onSubmit={this.handleSubmit}>Zapisz</Button>
         </form>
       </div>
   )
   }
 }
 
-export default AppRecipeForm
+export default AddRecipeForm;

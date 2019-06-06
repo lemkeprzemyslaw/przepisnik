@@ -9,7 +9,6 @@ const Admin = () => (
   </div>
 );
 
-const condition = authUser =>
-  authUser && !!authUser.roles[ROLES.ADMIN];
+const condition = authUser => authUser && !!authUser;
 
 export default withAuthorization(condition)(Admin);
