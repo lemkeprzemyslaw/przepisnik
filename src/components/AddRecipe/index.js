@@ -1,40 +1,80 @@
 import React from 'react';
+import { withFirebase } from '../Firebase';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import Button from '@material-ui/core/Button'
-import Input from '@material-ui/core/Input';
 import {FormControlLabel} from '@material-ui/core';
 import Switch from '@material-ui/core/Switch';
+import Select from '@material-ui/core/Select';
+
+const INITIAL_STATE = {
+  name: '',
+  ingredients: '',
+  description: '',
+  prepareTime: '',
+  difficult: '',
+  tags: '',
+  pub: false
+};
 
 class AddRecipeForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: '',
-      ingredients: '',
-      description: '',
-      prepareTime: '',
-      difficult: '',
-      tags: '',
-      pub: false
+    ...INITIAL_STATE
     }
   }
 
-  handleChange = (e) => {
+  onChange = (event) => {
     this.setState({
-      [e.target.id]: e.target.value
+      [event.target.id]: event.target.value
     })
   };
 
-  handleSwitchChange = (e) => {
+  onSwitchChange = (event) => {
     this.setState({
-      [e.target.value]: e.target.checked
+      [event.target.value]: event.target.checked
     })
   };
 
-  handleSubmit = (e) => {
+  onSubmit = (event) => {
+    const {
+      name,
+      ingredients,
+      description,
+      prepareTime,
+      difficult,
+      tags,
+      pub } = this.state;
 
+    event.preventDefault();
+    const userId = this.props.firebase.userId();
+
+    this.props.firebase
+      .recipe(userId)
+      .set({
+        name,
+        ingredients,
+        description,
+        prepareTime,
+        difficult,
+        tags,
+        pub
+      })
+      .then(() => {
+        console.log('dupa');
+        this.setState({ ...INITIAL_STATE });
+      })
+      .catch(error => {
+        this.setState({ error });
+        setTimeout(() => {
+          this.setState({ error: null })
+        }, 6000)
+      });
+
+
+    event.preventDefault();
   };
 
   render() {
@@ -49,14 +89,14 @@ class AddRecipeForm extends React.Component {
 
     return (
       <div>
-        <form>
+        <form onSubmit={this.onSubmit}>
           <FormControl variant="outlined" margin="dense" color="primary">
             <InputLabel htmlFor="name">Nazwa dania</InputLabel>
             <OutlinedInput
               id="name"
               name="name"
               value={name}
-              onChange={this.handleChange}
+              onChange={this.onChange}
               type="text"
               autoFocus
             />
@@ -67,7 +107,7 @@ class AddRecipeForm extends React.Component {
               id="ingredients"
               name="ingredients"
               value={ingredients}
-              onChange={this.handleChange}
+              onChange={this.onChange}
               type="text"
             />
           </FormControl>
@@ -77,7 +117,7 @@ class AddRecipeForm extends React.Component {
               id="description"
               name="description"
               value={description}
-              onChange={this.handleChange}
+              onChange={this.onChange}
               type="text"
             />
           </FormControl>
@@ -87,8 +127,31 @@ class AddRecipeForm extends React.Component {
               id="prepareTime"
               name="prepareTime"
               value={prepareTime}
-              onChange={this.handleChange}
+              onChange={this.onChange}
             />
+          </FormControl>
+          <FormControl variant="outlined">
+            <InputLabel htmlFor="outlined-age-native-simple">
+              Poziom trudności
+            </InputLabel>
+            <Select
+              native
+              required
+              id="difficult"
+              name="difficult"
+              value={difficult}
+              onChange={this.onChange}
+              input={
+                <OutlinedInput name="difficult" id="outlined-age-native-simple" />
+              }
+            >
+              <option value="" />
+              <option value={1}>Student</option>
+              <option value={2}>Niedzielny kucharz</option>
+              <option value={3}>Kucharz codzienny</option>
+              <option value={4}>Master chef</option>
+              <option value={5}>Hell's kitchen</option>
+            </Select>
           </FormControl>
           <FormControl variant="outlined" margin="dense">
             <InputLabel htmlFor="difficult">Poziom trudności</InputLabel>
@@ -96,7 +159,7 @@ class AddRecipeForm extends React.Component {
               id="difficult"
               name="difficult"
               value={difficult}
-              onChange={this.handleChange}
+              onChange={this.onChange}
               type="text"
             />
           </FormControl>
@@ -106,7 +169,7 @@ class AddRecipeForm extends React.Component {
               id="tags"
               name="tags"
               value={tags}
-              onChange={this.handleChange}
+              onChange={this.onChange}
               type="text"
             />
           </FormControl>
@@ -114,18 +177,25 @@ class AddRecipeForm extends React.Component {
             control={
               <Switch
                 checked={pub}
-                onChange={this.handleSwitchChange}
+                onChange={this.onSwitchChange}
                 value="pub"
                 color="primary"
               />
             }
             label={pub ? "Publiczny" : "Niepubliczny"}
           />
-          <Button onSubmit={this.handleSubmit}>Zapisz</Button>
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+          >Zapisz</Button>
         </form>
       </div>
   )
   }
 }
 
-export default AddRecipeForm;
+const AddRecipe = withFirebase(AddRecipeForm);
+
+export default AddRecipe;
