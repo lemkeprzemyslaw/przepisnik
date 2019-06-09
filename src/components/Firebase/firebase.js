@@ -39,7 +39,7 @@ class Firebase {
 
   users = () => this.db.collection('users');
 
-  recipe = uid => this.db.collection('recipes').doc(uid);
+  recipe = () => this.db.collection('recipes').doc();
 }
 
 export default Firebase;
