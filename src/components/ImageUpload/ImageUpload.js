@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
+import { withFirebase } from '../Firebase'
+
 class ImageUpload extends Component {
   constructor(props) {
     super(props);
@@ -12,14 +14,27 @@ class ImageUpload extends Component {
   }
 
   onChange = (event) => {
-      this.setState({ image: event.target.files[0] })
+    this.setState({ image: event.target.files[0] });
+  };
+
+  onSubmit = () => {
+    const storageRef = this.props.firebase.storage.ref();
+
+    storageRef.child('recipesImage/${}')
+      .put(this.state.image)
+      .catch(error => {
+        this.setState({ error });
+        setTimeout(() => {
+          this.setState({ error: null })
+        }, 6000)
+      })
   };
 
   render() {
     return (
       <div>
         <input type="file" onChange={this.onChange}/>
-        <button>Dodaj zdjęcie</button>
+        <button onClick={this.onSubmit} type='submit'>Dodaj zdjęcie</button>
       </div>
     );
   }
@@ -27,4 +42,4 @@ class ImageUpload extends Component {
 
 ImageUpload.propTypes = {};
 
-export default ImageUpload;
+export default withFirebase(ImageUpload);
