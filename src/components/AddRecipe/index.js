@@ -11,6 +11,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import {compose} from 'recompose';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Paper from '@material-ui/core/Paper';
+import ImageUpload from '../ImageUpload/ImageUpload';
 
 const styles = theme => ({
   main: {
@@ -26,6 +27,9 @@ const styles = theme => ({
   },
   ingredients: {
     width: '100%',
+  },
+  description:{
+    flexGrow: 3,
   },
   paper: {
     marginTop: theme.spacing(8),
@@ -125,6 +129,7 @@ class AddRecipeForm extends React.Component {
       <main className={this.props.classes.main}>
         <CssBaseline/>
         <Paper className={this.props.classes.paper}>
+          <ImageUpload />
           <form onSubmit={this.onSubmit} className={this.props.classes.form}>
             <FormControl variant="outlined" margin="dense" color="primary" fullWidth>
               <InputLabel htmlFor="name">Nazwa dania</InputLabel>
@@ -147,7 +152,7 @@ class AddRecipeForm extends React.Component {
                 required
               />
             </FormControl>
-            <FormControl variant="outlined" margin="dense">
+            <FormControl variant="outlined" margin="dense" className={this.props.classes.description}>
               <InputLabel htmlFor="description">Opis</InputLabel>
               <OutlinedInput
                 id="description"
