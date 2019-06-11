@@ -142,7 +142,8 @@ class AddRecipeForm extends React.Component {
                 autoFocus
               />
             </FormControl>
-            <FormControl variant="outlined" margin="dense" className={this.props.classes.ingredients}>
+            <FormControl variant="outlined" margin="dense" className={this.props.classes.ingredients} fullWidth
+            >
               <InputLabel htmlFor="ingredients">Składniki</InputLabel>
               <OutlinedInput
                 id="ingredients"
@@ -152,7 +153,7 @@ class AddRecipeForm extends React.Component {
                 required
               />
             </FormControl>
-            <FormControl variant="outlined" margin="dense" className={this.props.classes.description}>
+            <FormControl variant="outlined" margin="dense" className={this.props.classes.description} fullWidth>
               <InputLabel htmlFor="description">Opis</InputLabel>
               <OutlinedInput
                 id="description"
@@ -162,7 +163,7 @@ class AddRecipeForm extends React.Component {
                 required
               />
             </FormControl>
-            <FormControl variant="outlined" margin="dense">
+            <FormControl variant="outlined" margin="dense" fullWidth>
               <InputLabel htmlFor="prepareTime">Czas przygotowania</InputLabel>
               <OutlinedInput
                 id="prepareTime"
@@ -172,7 +173,7 @@ class AddRecipeForm extends React.Component {
                 required
               />
             </FormControl>
-            <FormControl variant="outlined">
+            <FormControl variant="outlined" fullWidth>
               <InputLabel htmlFor="outlined-age-native-simple">
                 Poziom trudności
               </InputLabel>
@@ -183,6 +184,7 @@ class AddRecipeForm extends React.Component {
                 name="difficult"
                 value={difficult}
                 onChange={this.onChange}
+                fullWidth
                 input={
                   <OutlinedInput name="difficult" id="outlined-age-native-simple"/>
                 }
@@ -195,7 +197,7 @@ class AddRecipeForm extends React.Component {
                 <option value={5}>Hell's kitchen</option>
               </Select>
             </FormControl>
-            <FormControl variant="outlined" margin="dense">
+            <FormControl variant="outlined" margin="dense" fullWidth>
               <InputLabel htmlFor="tags">Tagi</InputLabel>
               <OutlinedInput
                 id="tags"
