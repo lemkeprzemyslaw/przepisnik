@@ -25,13 +25,19 @@ class ImageUploadArea extends Component {
 
   onChange = (event) => {
     this.setState({ image: event.target.files[0] });
+    setTimeout(() => console.log(this.state.image), 2000)
   };
 
   onSubmit = () => {
     const storageRef = this.props.firebase.storage.ref();
 
-    storageRef.child('recipesImage/${}')
+    storageRef.child('recipesImage/' + this.state.image.name)
       .put(this.state.image)
+      .then(() => {
+        this.setState({
+          url: 'gs://bucket/images/recipesImage/' + this.state.image.name
+        })
+      })
       .catch(error => {
         this.setState({ error });
         setTimeout(() => {
