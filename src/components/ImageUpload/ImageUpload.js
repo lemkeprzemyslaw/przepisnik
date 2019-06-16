@@ -1,9 +1,19 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
+import Button from '@material-ui/core/Button'
+import OutlinedInput from '@material-ui/core/OutlinedInput';
+import {compose} from 'recompose';
+import withStyles from '@material-ui/core/styles/withStyles';
 import { withFirebase } from '../Firebase'
 
-class ImageUpload extends Component {
+const styles = theme => ({
+  upload: {
+    marginLeft: theme.spacing(3),
+  },
+});
+
+class ImageUploadArea extends Component {
   constructor(props) {
     super(props);
 
@@ -33,13 +43,16 @@ class ImageUpload extends Component {
   render() {
     return (
       <div>
-        <input type="file" onChange={this.onChange}/>
-        <button onClick={this.onSubmit} type='submit'>Dodaj zdjęcie</button>
+        <OutlinedInput id="upload-file" type="file" onChange={this.onChange}/>
+        <Button variant="contained" onClick={this.onSubmit} type='submit' color='primary' className={this.props.classes.upload}>Dodaj zdjęcie</Button>
       </div>
     );
   }
 }
 
-ImageUpload.propTypes = {};
+const ImageUpload = compose(
+  withFirebase,
+  withStyles(styles)
+)(ImageUploadArea);
 
-export default withFirebase(ImageUpload);
+export default ImageUpload;

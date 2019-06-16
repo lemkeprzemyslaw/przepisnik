@@ -25,12 +25,6 @@ const styles = theme => ({
       marginRight: 'auto',
     },
   },
-  ingredients: {
-    width: '100%',
-  },
-  description:{
-    flexGrow: 3,
-  },
   paper: {
     marginTop: theme.spacing(8),
     display: 'flex',
@@ -111,7 +105,6 @@ class AddRecipeForm extends React.Component {
         }, 6000)
       });
 
-
     event.preventDefault();
   };
 
@@ -142,7 +135,7 @@ class AddRecipeForm extends React.Component {
                 autoFocus
               />
             </FormControl>
-            <FormControl variant="outlined" margin="dense" className={this.props.classes.ingredients} fullWidth
+            <FormControl variant="outlined" margin="dense" fullWidth
             >
               <InputLabel htmlFor="ingredients">Składniki</InputLabel>
               <OutlinedInput
