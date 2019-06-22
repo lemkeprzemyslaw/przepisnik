@@ -1,5 +1,6 @@
 import React from 'react';
 import { withFirebase } from '../Firebase';
+import ReactDOM from 'react-dom';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
@@ -12,6 +13,7 @@ import {compose} from 'recompose';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Paper from '@material-ui/core/Paper';
 import ImageUpload from '../ImageUpload/ImageUpload';
+import TextField from '@material-ui/core/TextField';
 
 const styles = theme => ({
   main: {
@@ -35,6 +37,16 @@ const styles = theme => ({
   form: {
     width: '100%', // Fix IE 11 issue.
     marginTop: theme.spacing(1),
+  },
+  label: {
+    backgroundColor: 'white',
+    padding: `0 ${theme.spacing(.5)}px 0`,
+  },
+  select: {
+    marginTop: theme.spacing(1),
+    '& select:focus': {
+      opacity: '0',
+    },
   },
   submit: {
     marginTop: theme.spacing(3),
@@ -125,34 +137,38 @@ class AddRecipeForm extends React.Component {
           <ImageUpload />
           <form onSubmit={this.onSubmit} className={this.props.classes.form}>
             <FormControl variant="outlined" margin="dense" color="primary" fullWidth>
-              <InputLabel htmlFor="name">Nazwa dania</InputLabel>
-              <OutlinedInput
+              <TextField
                 id="name"
                 name="name"
+                label="Nazwa dania"
                 value={name}
                 onChange={this.onChange}
                 required
+                variant="outlined"
                 autoFocus
               />
             </FormControl>
-            <FormControl variant="outlined" margin="dense" fullWidth
-            >
-              <InputLabel htmlFor="ingredients">Składniki</InputLabel>
-              <OutlinedInput
+            <FormControl variant="outlined" margin="dense" fullWidth>
+              <TextField
                 id="ingredients"
                 name="ingredients"
+                label="Składniki"
                 value={ingredients}
                 onChange={this.onChange}
+                variant="outlined"
                 required
               />
             </FormControl>
             <FormControl variant="outlined" margin="dense" className={this.props.classes.description} fullWidth>
-              <InputLabel htmlFor="description">Opis</InputLabel>
-              <OutlinedInput
+              <TextField
                 id="description"
                 name="description"
+                label="Opis"
                 value={description}
                 onChange={this.onChange}
+                multiline
+                variant="outlined"
+                rows="8"
                 required
               />
             </FormControl>
@@ -166,13 +182,14 @@ class AddRecipeForm extends React.Component {
                 required
               />
             </FormControl>
-            <FormControl variant="outlined" fullWidth>
-              <InputLabel htmlFor="outlined-age-native-simple">
+            <FormControl variant="outlined" className={this.props.classes.select} fullWidth>
+              <InputLabel className={this.props.classes.label} htmlFor="outlined-age-native-simple">
                 Poziom trudności
               </InputLabel>
               <Select
                 native
                 required
+                variant="outlined"
                 id="difficult"
                 name="difficult"
                 value={difficult}
