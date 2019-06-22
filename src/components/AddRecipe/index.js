@@ -1,6 +1,5 @@
 import React from 'react';
 import { withFirebase } from '../Firebase';
-import ReactDOM from 'react-dom';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
@@ -173,10 +172,11 @@ class AddRecipeForm extends React.Component {
               />
             </FormControl>
             <FormControl variant="outlined" margin="dense" fullWidth>
-              <InputLabel htmlFor="prepareTime">Czas przygotowania</InputLabel>
-              <OutlinedInput
+              <TextField
                 id="prepareTime"
                 name="prepareTime"
+                label="Czas przygotowania"
+                variant="outlined"
                 value={prepareTime}
                 onChange={this.onChange}
                 required
@@ -208,10 +208,11 @@ class AddRecipeForm extends React.Component {
               </Select>
             </FormControl>
             <FormControl variant="outlined" margin="dense" fullWidth>
-              <InputLabel htmlFor="tags">Tagi</InputLabel>
-              <OutlinedInput
+              <TextField
                 id="tags"
                 name="tags"
+                label="Tagi"
+                variant="outlined"
                 value={tags}
                 onChange={this.onChange}
               />
