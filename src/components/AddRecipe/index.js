@@ -13,6 +13,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Paper from '@material-ui/core/Paper';
 import ImageUpload from '../ImageUpload/ImageUpload';
 import TextField from '@material-ui/core/TextField';
+import { sha256 } from 'js-sha256';
 
 const styles = theme => ({
   main: {
@@ -53,6 +54,7 @@ const styles = theme => ({
 });
 
 const INITIAL_STATE = {
+  id: '',
   name: '',
   ingredients: '',
   description: '',
@@ -118,6 +120,10 @@ class AddRecipeForm extends React.Component {
 
     event.preventDefault();
   };
+
+  componentDidMount() {
+    this.setState({ id: sha256(Date.now().toString()) });
+  }
 
   render() {
     const {
